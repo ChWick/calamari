@@ -80,6 +80,8 @@ def run(args):
         remove_invalid=True,
         args={
             'text_index': args.pagexml_text_index,
+            'word_level': args.pagexml_word_level,
+            'word_boundary': args.pagexml_word_boundary,
             'pad': args.dataset_pad,
         },
     )
@@ -115,7 +117,7 @@ def run(args):
 
         output_dir = args.output_dir
 
-        dataset.store_text(sentence, sample, output_dir=output_dir, extension=args.extension)
+        dataset.store_text(prediction, sample, output_dir=output_dir, extension=args.extension)
 
         if args.extended_prediction_data:
             ps = Predictions()
@@ -187,6 +189,8 @@ def main():
     # dataset extra args
     parser.add_argument("--dataset_pad", default=None, nargs='+', type=int)
     parser.add_argument("--pagexml_text_index", default=1)
+    parser.add_argument("--pagexml_word_level", action="store_true", help="Save word elements in PAGE XML.")
+    parser.add_argument("--pagexml_word_boundary", default="unicode", choices=["unicode", "whitespace"])
 
     args = parser.parse_args()
 
